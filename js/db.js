@@ -61,3 +61,42 @@ async function addData() {
 function showResult(text) {
     document.querySelector("output").innerHTML = text;
 }
+
+
+
+/*
+function showResult(text) {
+    document.getElementById("resultados").innerHTML = text;
+}*/
+
+
+/*
+async function Buscar(){
+    let nomeBuscado = document.getElementById ('buscarNome').value;
+    const tx = db.transaction('pessoas', 'readonly');
+    const store = tx.createObjectStore('pessoas');
+    let objetoBuscado = store.get(nomeBuscado);
+}
+*/ 
+
+/*
+function limparCampos() {
+    document.getElementById('nome').value = '';
+    document.getElementById('idade').value = '';
+}
+*/
+
+/*
+async function buscar() {
+    let nomeBuscado = document.getElementById('buscarNome').value;
+    const tx = db.transaction('pessoas', 'readonly'); 
+    const store = tx.objectStore('pessoas');
+    try {
+        let objetoBuscado = await store.get(nomeBuscado);
+        document.getElementById('nome').value = objetoBuscado.nome;
+        document.getElementById('idade').value = objetoBuscado.idade; 
+    } catch (error){
+            console.log(error.message); 'Cannot read propertie
+    }
+}
+*/
