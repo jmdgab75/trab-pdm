@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="exemplo de fallback">
     <title>Minha primeira PWA</title>
     <link rel="apple-touch-icon" href="images/pwa-icon-256.png" />
     <link rel="stylesheet" href="css/style.css" />
-    <!--viewport para designers responsivos (mobo), content é a configuração-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="white" />
     <link rel="manifest" href="manifest.json" />
@@ -15,21 +13,17 @@
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/db.js"></script>
 </head>
-
-<body class="fullscreen">
+<body>
     <div class="container">
-        <h1 class="title">Minha primeira PWA</h1>
-        <div style="text-align: center;">
-            <img src="/images/pwa-icon-256.png" alt="pwa" width="256" height="256">
-        </div>
-        <div style="text-align: center;">
-            <button id="btnSalvar">Salvar</button>
-            <button id="btnListar">Listar</button>
-        </div>
-        <div>
-            <output></output>
-        </div>
+        <h1>Bloco de Notas</h1>
+        <form id="note-form">
+            <input type="text" id="title" placeholder="Título" required>
+            <textarea id="description" placeholder="Descrição" required></textarea>
+            <button type="submit">Adicionar Nota</button>
+        </form>
+        <ul id="note-list"></ul>
     </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
