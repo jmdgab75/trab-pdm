@@ -4,7 +4,7 @@ import { registerRoute, Route } from 'workbox-routing';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 
-// configurando o cache
+// Configurando o cache de páginas
 const pageCache = new CacheFirst({
   cacheName: 'primeira-pwa-cache',
   plugins: [
@@ -17,15 +17,18 @@ const pageCache = new CacheFirst({
   ],
 });
 
-//indicando o cache de página
+// Indicando o cache de página
 warmStrategyCache({
   urls: ['/index.html', '/'],
   strategy: pageCache,
 });
-//registrando a rota
-registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// configurando cache de assets
+// Registrando a rota para páginas
+registerRoute(({ request }) => request.mode === 'navigate', ({ event }) => {
+  return pageCache.handle({ event });
+});
+
+// Configurando cache de assets (scripts, estilos, etc.)
 registerRoute(
   ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
   new StaleWhileRevalidate({
@@ -38,11 +41,12 @@ registerRoute(
   }),
 );
 
-// configurando offline fallback
+// Configurando offline fallback para páginas
 offlineFallback({
   pageFallback: '/offline.html',
 });
 
+// Configurando a rota de cache para imagens
 const imageRoute = new Route(({ request }) => {
   return request.destination === 'image';
 }, new CacheFirst({
@@ -50,9 +54,12 @@ const imageRoute = new Route(({ request }) => {
   plugins: [
     new ExpirationPlugin({
       maxAgeSeconds: 60 * 60 * 24 * 30,
-    })
-  ]
+    }),
+    new CacheableResponsePlugin({
+      statuses: [0, 200],
+    }),
+  ],
 }));
 
+// Registrando a rota de cache para imagens
 registerRoute(imageRoute);
-
