@@ -17,44 +17,22 @@
 <body>
     <h1>Bloco de Notas</h1>
     <form id="note-form">
-        <label for="note">Adicionar Nota:</label>
+        <label for="title">Titulo:</label>
+        <input type="text" id="title" required>
+        
+        <label for="categoria">Categoria:</label>
+        <input type="text" id="categoria" required>
+
+        <label for="note">Descrição:</label>
         <input type="text" id="note" required>
+
+        <label for="date">Data:</label>
+        <input type="date" id="date" required>
+
         <button type="submit">Salvar</button>
     </form>
     <ul id="note-list"></ul>
-
-    <script>
-        const noteForm = document.getElementById('note-form');
-        const noteList = document.getElementById('note-list');
-
-        noteForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const noteText = document.getElementById('note').value;
-            if (!noteText) return;
-
-            const noteDate = new Date().toLocaleString();
-            const noteElement = document.createElement('li');
-            noteElement.classList.add('note');
-            noteElement.innerHTML = `
-                <span>${noteText}</span>
-                <span>${noteDate}</span>
-                <div class="note-actions">
-                    <button class="delete-button">Excluir</button>
-                </div>
-            `;
-
-            noteList.appendChild(noteElement);
-
-            // Limpa o campo de entrada
-            document.getElementById('note').value = '';
-
-            // Adiciona um evento de clique ao botão de exclusão
-            const deleteButton = noteElement.querySelector('.delete-button');
-            deleteButton.addEventListener('click', function () {
-                noteList.removeChild(noteElement);
-            });
-        });
-    </script>
 </body>
 </html>
+
+

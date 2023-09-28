@@ -13,34 +13,71 @@ if ('serviceWorker' in navigator) {
 }
 
 
-const noteForm = document.getElementById('note-form');
-const noteList = document.getElementById('note-list');
+document.addEventListener("DOMContentLoaded", () => {
+  const noteForm = document.getElementById("note-form");
+  const noteList = document.getElementById("note-list");
 
-noteForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+  noteForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const noteText = document.getElementById('note').value;
-    if (!noteText) return;
+      const title = document.getElementById("title").value;
+      const categoria = document.getElementById("categoria").value;
+      const description = document.getElementById("note").value;
+      const date = document.getElementById("date").value;
 
-    const noteDate = new Date().toLocaleString();
-    const noteElement = document.createElement('li');
-    noteElement.classList.add('note');
-    noteElement.innerHTML = `
-        <span>${noteText}</span>
-        <span>${noteDate}</span>
-        <div class="note-actions">
-            <button class="delete-button">Excluir</button>
-        </div>
-    `;
+      // Crie um novo elemento de lista
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+          <strong>${title}</strong> (${categoria}) - ${description} (${date})
+          <button class="delete-button">Excluir</button>
+      `;
 
-    noteList.appendChild(noteElement);
+      // Adicione um ouvinte de evento de clique ao botão Excluir
+      const deleteButton = listItem.querySelector(".delete-button");
+      deleteButton.addEventListener("click", () => {
+          listItem.remove();
+      });
 
-    // Limpa o campo de entrada
-    document.getElementById('note').value = '';
+      // Adicione o novo item à lista
+      noteList.appendChild(listItem);
 
-    // Adiciona um evento de clique ao botão de exclusão
-    const deleteButton = noteElement.querySelector('.delete-button');
-    deleteButton.addEventListener('click', function () {
-        noteList.removeChild(noteElement);
-    });
+      // Limpe o formulário
+      noteForm.reset();
+  });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
