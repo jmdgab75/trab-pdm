@@ -1,29 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="exemplo de fallback">
-    <title>Bloco de Notas</title>
-    <link rel="apple-touch-icon" href="images/icon-256.png" />
-    <link rel="stylesheet" href="css/style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="white" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="favicon.ico">
-    <script type="module" src="js/main.js"></script> 
-    <script type="module" src="js/db.js"></script>
-</head>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="exemplo de fallback">
+        <title>Bloco de Notas</title>
+        <link rel="apple-touch-icon" href="images/icon-256.png" />
+        <link rel="stylesheet" href="css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="white" />
+        <link rel="manifest" href="manifest.json" />
+        <link rel="icon" href="favicon.ico">
+        <script type="module" src="js/main.js"></script> 
+        <script type="module" src="js/db.js"></script>
+    </head>
+    <body>
 <body>
-    <div class="container">
-        <h1>Bloco de Notas</h1>
-        <form id="note-form">
-            <input type="text" id="title" placeholder="Título" required>
-            <textarea id="description" placeholder="Descrição" required></textarea>
-            <button type="submit">Adicionar Nota</button>
-        </form>
-        <ul id="note-list"></ul>
-    </div>
-    <script src="script.js"></script>
-</body>
+    <h1>Bloco de Notas</h1>
+    <form id="note-form">
+        <label for="note">Adicionar Nota:</label>
+        <input type="text" id="note" required>
+        <button type="submit">Salvar</button>
+    </form>
+    <ul id="note-list"></ul>
 
+    <script>
+        const noteForm = document.getElementById('note-form');
+        const noteList = document.getElementById('note-list');
+
+        noteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const noteText = document.getElementById('note').value;
+            if (!noteText) return;
+
+            const noteDate = new Date().toLocaleString();
+            const noteElement = document.createElement('li');
+            noteElement.classList.add('note');
+            noteElement.innerHTML = `
+                <span>${noteText}</span>
+                <span>${noteDate}</span>
+                <div class="note-actions">
+                    <button class="delete-button">Excluir</button>
+                </div>
+            `;
+
+            noteList.appendChild(noteElement);
+
+            // Limpa o campo de entrada
+            document.getElementById('note').value = '';
+
+            // Adiciona um evento de clique ao botão de exclusão
+            const deleteButton = noteElement.querySelector('.delete-button');
+            deleteButton.addEventListener('click', function () {
+                noteList.removeChild(noteElement);
+            });
+        });
+    </script>
+</body>
 </html>

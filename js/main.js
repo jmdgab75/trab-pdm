@@ -12,38 +12,35 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const noteForm = document.getElementById("note-form");
-  const titleInput = document.getElementById("title");
-  const descriptionInput = document.getElementById("description");
-  const noteList = document.getElementById("note-list");
 
-  noteForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+const noteForm = document.getElementById('note-form');
+const noteList = document.getElementById('note-list');
 
-      const title = titleInput.value;
-      const description = descriptionInput.value;
+noteForm.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-      if (title.trim() === "" || description.trim() === "") {
-          alert("Por favor, preencha todos os campos.");
-          return;
-      }
+    const noteText = document.getElementById('note').value;
+    if (!noteText) return;
 
-      const li = document.createElement("li");
-      li.innerHTML = `
-          <strong>${title}:</strong> ${description}
-          <button class="delete-btn">Excluir</button>
-      `;
+    const noteDate = new Date().toLocaleString();
+    const noteElement = document.createElement('li');
+    noteElement.classList.add('note');
+    noteElement.innerHTML = `
+        <span>${noteText}</span>
+        <span>${noteDate}</span>
+        <div class="note-actions">
+            <button class="delete-button">Excluir</button>
+        </div>
+    `;
 
-      noteList.appendChild(li);
+    noteList.appendChild(noteElement);
 
-      titleInput.value = "";
-      descriptionInput.value = "";
+    // Limpa o campo de entrada
+    document.getElementById('note').value = '';
 
-      li.querySelector(".delete-btn").addEventListener("click", () => {
-          noteList.removeChild(li);
-      });
-  });
+    // Adiciona um evento de clique ao botão de exclusão
+    const deleteButton = noteElement.querySelector('.delete-button');
+    deleteButton.addEventListener('click', function () {
+        noteList.removeChild(noteElement);
+    });
 });
-
-
